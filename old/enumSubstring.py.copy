@@ -1,0 +1,85 @@
+import sys
+import argparse
+from esa import py_esaxx, esaxx_py
+
+def read_file(fn):
+    try:
+        with open(fn, "rb") as fp:
+            return list(fp.read())
+    except Exception as e:
+        print(f"Error reading file {fn}: {e}")
+        return None
+
+def get_id(word, word2id):
+    if word not in word2id:
+        word2id[word] = len(word2id)
+    return word2id[word]
+
+def print_snippet(T, beg, length, id2word):
+    for i in range(length):
+        c = T[beg + i]
+        if id2word:
+            print(id2word[c], end=" ")
+        else:
+            print("_" if c.isspace() else c, end="")
+
+def main():
+    parser = argparse.ArgumentParser(description="Command line parser")
+    parser.add_argument('-w', '--word', action="store_true", help="word type")
+    args, unknown = parser.parse_known_args()
+
+    if unknown:
+        print(f"Unknown arguments {unknown}")
+        sys.exit(1)
+
+    T = []
+    is_word = args.word
+    word2id = {}
+    orig_len = 0
+
+    for line in sys.stdin:
+        if is_word:
+            words = line.split()
+            for word in words:
+                T.append(get_id(word, word2id))
+            orig_len += len(line)
+        else:
+            T.extend(line)
+            orig_len += len(line)
+
+    id2word = [""] * len(word2id)
+    for word, idx in word2id.items():
+        id2word[idx] = word
+
+    # TODO: Call esaxx function and other necessary functions.
+    # This portion depends on the esaxx function's Python implementation.
+    SA = [0]*len(T)
+    L = [0]*len(T)
+    R = [0]*len(T)
+    D = [0]*len(T)
+    
+    k = len(id2word) if is_word else 0x100
+    
+    # Output
+    if is_word:
+        print(f"origN: {orig_len}")
+    print(f"    n: {len(T)}")
+    print(f"alpha: {len(id2word) if is_word else 256}")
+    
+    # This is a placeholder for the nodeNum as it depends on the esaxx function's implementation.
+    node_num = 0
+    print(T)
+    print(esaxx_py(''.join(T).encode('utf-8'), SA, L, R, D, len(T), k, node_num))
+    print('---------------')
+    if esaxx_py(T, SA, L, R, D, len(T), k, node_num) == -1:
+        return -1
+    
+    print(f"node:{node_num}")
+    
+    for i in range(node_num):
+        print(f"{i}\t{R[i] - L[i]}\t{D[i]}\t", end="")
+        print_snippet(T, SA[L[i]], D[i], id2word)
+        print()
+
+if __name__ == "__main__":
+    main()
