@@ -21,7 +21,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',  # 必要なPythonのバージョン
+    python_requires='>=3.7',  # 必要なPythonのバージョン
     install_requires=[
         "cython",
         # その他の依存関係
