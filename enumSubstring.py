@@ -1,10 +1,5 @@
 import sys
-from esa import esaxx_py
-
-def get_id(word, word2id):
-    if word not in word2id:
-        word2id[word] = len(word2id)
-    return word2id[word]
+from esa import esaxx
 
 def print_snippet(T, beg, length):
     for i in range(length):
@@ -18,7 +13,7 @@ def main():
 
     for line in sys.stdin:
         T +=line.strip()
-        orig_len += len(line)
+        orig_len += len(line.strip())
 
     # TODO: Call esaxx function and other necessary functions.
     # This portion depends on the esaxx function's Python implementation.
@@ -30,16 +25,12 @@ def main():
     k = 0x100
     
     # Output
-    print(f"origN: {orig_len}")
-    print(f"    n: {len(T)}")
+    print(f"    n: {orig_len}")
     print(f"alpha: {k}")
     
     # This is a placeholder for the nodeNum as it depends on the esaxx function's implementation.
     node_num = 0
-    #print(T)
-    #print(esaxx_py(T.encode(), SA, L, R, D, len(T), k, node_num))
-    #print('---------------')
-    node_num = esaxx_py(T, SA, L, R, D, len(T), k, node_num)
+    node_num = esaxx(T, SA, L, R, D, orig_len, k, node_num)
     #if esaxx_py(T, SA, L, R, D, len(T), k, node_num) == -1:
     if node_num == -1:
         return -1
@@ -51,12 +42,11 @@ def main():
         print_snippet(T, SA[L[i]], D[i])
         print()
 
-    #print(node_num)
-    #print(T)
-    #print(SA)
-    #print(L)
-    #print(R)
-    #print(D)
+    print(SA)
+    print(L)
+    print(R)
+    print(D)
+    print(node_num)
         
 if __name__ == "__main__":
     main()
