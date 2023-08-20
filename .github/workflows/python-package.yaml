@@ -26,4 +26,4 @@ jobs:
       run: |
         python setup.py build_ext --inplace
         # テストコマンドもここに追加、例: python -m unittest discover
-	python test.py
+        python test.py
