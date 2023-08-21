@@ -32,7 +32,7 @@ jobs:
         pip install dist/*.whl
         python test.py
         
-- name: Use manylinux2010 for Linux wheels
+    - name: Use manylinux2010 for Linux wheels
       if: runner.os == 'Linux'
       run: |
         docker pull quay.io/pypa/manylinux2010_x86_64
