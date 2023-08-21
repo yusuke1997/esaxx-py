@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: mac-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -21,15 +21,6 @@ jobs:
 
     - name: Build distributions
       run: python setup.py sdist bdist_wheel
-
-    - name: Use manylinux1 for Linux wheels
-      if: runner.os == 'Linux'
-      run: |
-        docker pull quay.io/pypa/manylinux1_x86_64
-        docker run --rm -v `pwd`:/io quay.io/pypa/manylinux1_x86_64 /bin/bash -c "cd /io && ls -l wheelhouse/ && for whl in wheelhouse/esaxx_py*whl; do auditwheel repair \"$whl\" -w /io/dist/; done"
-
-    # For macOS and Windows, we can directly use the built wheel.
-    # If any platform-specific adjustments are needed, they can be added here as conditional steps.
 
     - name: Publish to PyPI
       env:
