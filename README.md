@@ -68,6 +68,11 @@ echo abracadabra | ./a.out
 In the original implementation, the return value of esaxx was an error code, not node_num.
 However, due to the constraints of Python and the difficulty in passing by reference, I've chosen to return node_num.
 
+
+## Maximal Substrings
+
+
+
 ## Additional Information
 
 C++ Implementation:

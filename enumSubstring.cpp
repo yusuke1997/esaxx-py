@@ -3,7 +3,7 @@
 #include <vector>
 #include <map>
 #include "cmdline.h"
-#include "src/esa.hxx"
+#include "esa.hxx"
 
 using namespace std;
 
