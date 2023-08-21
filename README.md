@@ -111,7 +111,9 @@ for i in range(node_num):
     print_snippet(T, SA[L[i]], D[i])
     print()
 ```
+The first column represents the frequency of occurrence, and the second column represents the length of the string.
 
+Here, even strings that appear more than once are listed, even if they are just one character. If you want to skip those, you can use `if len < 2: continue`.
 ```bash
 count	length	string
 2	4	abra
