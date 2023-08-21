@@ -33,7 +33,7 @@ D = [0]*len(T)
     
 k = 0x100
 node_num = 0
-node_num = esaxx(T, SA, L, R, D, orig_len, k, node_num)
+node_num = esaxx(T, SA, L, R, D, len(T), k, node_num)
 if node_num == -1:
     exit()
 
@@ -88,7 +88,7 @@ D = [0]*len(T)
     
 k = 0x100
 node_num = 0
-node_num = esaxx(T, SA, L, R, D, orig_len, k, node_num)
+node_num = esaxx(T, SA, L, R, D, len(T), k, node_num)
 if node_num == -1:
     exit()
 
@@ -111,13 +111,12 @@ for i in range(node_num):
     print_snippet(T, SA[L[i]], D[i])
     print()
 ```
+The first column represents the frequency of occurrence, and the second column represents the length of the string.
 ```bash
 count	length	string
 2	4	abra
 5	1	a
 ```
-The first column represents the frequency of occurrence, and the second column represents the length of the string.
-
 Here, even strings that appear more than once are listed, even if they are just one character. If you want to skip those, you can use `if len < 2: continue`.
 
 
@@ -129,6 +128,22 @@ C++ (enumMaxSubstring.cpp):
 ```
 g++ enumMaxSubstring.cpp
 echo abracadabra | ./a.out
+```
+
+### UPDATE in 0.2.0
+Introduced a new function: get_maximal_substrings(str).
+This function allows for easier extraction of maximal substrings from a given string.
+
+Usage Example:
+```
+from esa import get_maximal_substrings
+
+T = 'abracadabra'
+substrings = get_maximal_substrings(T)
+
+print("count\tlength\tstring")
+for substring in substrings:
+    print(f'{substring.count}\t{substring.length}\t{substring.string})
 ```
 
 

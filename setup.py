@@ -9,9 +9,9 @@ ext = Extension(name="esa",
 
 setup(
     name="esaxx-py",  # パッケージ名
-    version="0.1.0",  # バージョン情報
+    version="0.2.0",  # バージョン情報
     author="Yusuke Sakai",  # あなたの名前
-    author_email="sakai@yusuke1997.jp",  # あなたのメール
+    author_email="github@yusuke1997.jp",  # あなたのメール
     description="Python wrapper of esaxx",  # 短い説明
     long_description=open("README.md", "r", encoding="utf-8").read(),  # ロングディスクリプション
     long_description_content_type="text/markdown",  # READMEの形式
