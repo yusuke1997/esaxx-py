@@ -1,0 +1,5 @@
+include esa.cxx
+include esa.hxx
+include sais.cxx
+include sais.hxx
+include esaxx_wrapper.cpp

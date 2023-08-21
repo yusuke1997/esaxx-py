@@ -1,0 +1,4 @@
+include esa.hxx
+include sais.hxx
+include esaxx_wrapper.cpp
+include esa.pyx

@@ -4,18 +4,18 @@
 ![Python versions](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue)
 [![Python package](https://github.com/yusuke1997/esaxx-py/actions/workflows/python-package.yaml/badge.svg)](https://github.com/yusuke1997/esaxx-py/actions/workflows/python-package.yaml)
 
-Enhanced Suffix Array (ESA) の Python 実装。
 
-C++で実装されているオリジナルコード（[https://github.com/hillbig/esaxx](https://github.com/hillbig/esaxx)）をpythonから呼び出せるようにしたもの。
+Python wrapper of the Enhanced Suffix Array (ESA).
 
+This is a version adapted for Python, originating from the C++ implementation found [here](https://github.com/hillbig/esaxx).
 
-## インストール
+## Installation
 
 ```bash
 pip install esaxx-py
 ```
 
-## 使用方法
+## Usage
 
 ```python
 from esa import esaxx
@@ -53,52 +53,46 @@ node:5
 4	11	0
 ```
 
-あるいはnumSubstring.py`を用いて
+Alternatively, you can use numSubstring.py:
 ```bash
 ehco abracadabra | python numSubstring.py
 ```
 
-オリジナルの実装では
+For the original implementation:
 ```bash
 g++ enumSubstring.cpp
 echo abracadabra | ./a.out
 ```
 
+### Note
+In the original implementation, the return value of esaxx was an error code, not node_num.
+However, due to the constraints of Python and the difficulty in passing by reference, I've chosen to return node_num.
 
+## Additional Information
 
-### 注意点
-
-オリジナル実装では、esaxxの戻り値はエラーコードで、node_numではない。
-だけど、pythonの都合で、参照渡しの方法が分からなかったので、便宜上、node_numを返すようにしている。
-
-
-
-## その他
-
-オリジナル実装
+Original Implementation:
 
 - https://github.com/hillbig/esaxx
 - https://code.google.com/archive/p/esaxx/
 
-Rustでの実装
+Rust Version:
 
 - https://github.com/Narsil/esaxx-rs/
 
-esaxx自体が実際に使用されているソフトウェア
+Software using esaxx:
 
 - https://github.com/huggingface/tokenizers
 - https://github.com/google/sentencepiece
 - https://github.com/shuyo/ldig
 - http://phontron.com/pialign/
 
-esaxxを使用している論文リスト
+List of papers using esaxx:
 - https://ipsj.ixsq.nii.ac.jp/ej/index.php?active_action=repository_view_main_item_detail&page_id=13&block_id=8&item_id=47681&item_no=1
 - https://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/A3-1.pdf
 - https://www.anlp.jp/proceedings/annual_meeting/2012/pdf_dir/D5-2.pdf
 
-esaxxの解説記事
+Articles about `esaxx`:
 
 - https://tech.retrieva.jp/entry/2021/11/02/115816
 - https://shogo82148.hatenablog.com/entry/20110916/1316172382
 - https://takeda25.hatenablog.jp/entry/20101202/1291269994
-- 
