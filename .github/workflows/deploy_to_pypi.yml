@@ -30,9 +30,8 @@ jobs:
     - name: Test wheel
       run: |
         pip install dist/*.whl
-        # ここにテストコマンドを追加。例: pytest tests/
         python test.py
-
+        
 - name: Use manylinux2010 for Linux wheels
       if: runner.os == 'Linux'
       run: |
