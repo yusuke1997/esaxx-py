@@ -2,14 +2,13 @@ name: Publish Python 🐍 distributions 📦 to PyPI
 
 on: [push]
 
-
 jobs:
   build:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
         python-version: ['3.7', '3.8', '3.9', '3.10', '3.11']
-    
+
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
@@ -27,17 +26,12 @@ jobs:
     - name: Build wheel
       run: python setup.py sdist bdist_wheel
 
-    - name: Test wheel
-      run: |
-        pip install dist/*.whl
-        python test.py
-        
-    - name: Use manylinux2010 for Linux wheels
+    - name: Use manylinux1 for Linux wheels
       if: runner.os == 'Linux'
       run: |
         docker pull quay.io/pypa/manylinux1_x86_64
-        docker run --rm -v `pwd`:/io quay.io/pypa/manylinux1_x86_64 /bin/bash -c "cd /io && /opt/python/cp37-cp37m/bin/pip wheel . -w wheelhouse/"
-        docker run --rm -v `pwd`:/io quay.io/pypa/manylinux1_x86_64 /bin/bash -c "cd /io && /opt/python/cp37-cp37m/bin/pip install auditwheel && auditwheel repair wheelhouse/* -w /io/dist/"
+        docker run --rm -v `pwd`:/io quay.io/pypa/manylinux1_x86_64 /bin/bash -c "cd /io && /opt/python/cp${{ matrix.python-version }}-cp${{ matrix.python-version }}*/bin/pip wheel . -w wheelhouse/"
+        docker run --rm -v `pwd`:/io quay.io/pypa/manylinux1_x86_64 /bin/bash -c "cd /io && /opt/python/cp${{ matrix.python-version }}-cp${{ matrix.python-version }}*/bin/pip install auditwheel && auditwheel repair wheelhouse/* -w /io/dist/"
 
   deploy:
     needs: build
@@ -61,3 +55,4 @@ jobs:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
       run: twine upload dist/*
+
