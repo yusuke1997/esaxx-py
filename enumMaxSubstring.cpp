@@ -3,7 +3,7 @@
 #include <vector>
 #include <map>
 #include "cmdline.h"
-#include "src/esa.hxx"
+#include "esa.hxx"
 
 using namespace std;
 
@@ -119,8 +119,8 @@ int main(int argc, char* argv[]){
   if (isWord){
     cerr << "origN:" << origLen << endl;
   }
-  cerr << "    n:" << T.size() << endl;
-  cerr << "alpha:" << k        << endl;
+  //cerr << "    n:" << T.size() << endl;
+  //cerr << "alpha:" << k        << endl;
 
   int nodeNum = 0;
   if (esaxx(T.begin(), SA.begin(), 
@@ -128,13 +128,45 @@ int main(int argc, char* argv[]){
 	    (int)T.size(), k, nodeNum) == -1){
     return -1;
   }
-  cerr << " node:" << nodeNum << endl;
+  
+  //cerr << " node:" << nodeNum << endl;
+  //
+  //for (int i = 0; i < nodeNum; ++i){
+  //  cout << i << "\t" << R[i] - L[i] << "\t"  << D[i] << "\t";
+  //  printSnipet(T, SA[L[i]], D[i], id2word);
+  //  cout << endl;
+  //}
 
-  for (int i = 0; i < nodeNum; ++i){
-    cout << i << "\t" << R[i] - L[i] << "\t"  << D[i] << "\t";
+
+  // ここから追記部分
+  // https://takeda25.hatenablog.jp/entry/20101202/1291269994
+  int size = T.size();
+
+  // BWT の変化を記録
+  vector<int> rank(size);
+  int r = 0;
+  for (int i = 0; i < size; i++) {
+    if (i == 0 || T[(SA[i] + size - 1) % size] != T[(SA[i - 1] + size - 1) % size]) {
+      r++;
+    }
+    rank[i] = r;
+  }
+
+  cout << "count\tlength\tstring" << endl;
+  // 極大部分文字列を列挙
+  for (int i = 0; i < nodeNum; ++i) {
+    int len = D[i];
+    if (len == 0 || (rank[R[i] - 1] - rank[L[i]] == 0)) {
+      continue;
+    }
+    cout << R[i] - L[i] << "\t" << D[i] << "\t";
+    //int begin = SA[L[i]];
+    //for (int j = 0; j < len; ++j) {
+    //  cout << T[begin + j];
+    //}
     printSnipet(T, SA[L[i]], D[i], id2word);
     cout << endl;
   }
-
+  
   return 0;
 }

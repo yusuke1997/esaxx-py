@@ -70,10 +70,11 @@ However, due to the constraints of Python and the difficulty in passing by refer
 
 ## Additional Information
 
-Original Implementation:
+C++ Implementation:
 
 - https://github.com/hillbig/esaxx
 - https://code.google.com/archive/p/esaxx/
+- https://github.com/TNishimoto/esaxx
 
 Rust Version:
 
@@ -96,3 +97,4 @@ Articles about `esaxx`:
 - https://tech.retrieva.jp/entry/2021/11/02/115816
 - https://shogo82148.hatenablog.com/entry/20110916/1316172382
 - https://takeda25.hatenablog.jp/entry/20101202/1291269994
+- https://blog.shibayu36.org/entry/2017/01/28/150033
