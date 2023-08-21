@@ -8,30 +8,32 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Use manylinux1 for Linux wheels
-      if: runner.os == 'Linux'
-      run: |
-        docker pull quay.io/pypa/manylinux1_x86_64
 
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: 3.9
 
-    - name: Install twine
+    - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install setuptools wheel cython twine
+        pip install setuptools wheel cython twine auditwheel
 
     - name: Build distributions
-      run: |
-        python setup.py sdist bdist_wheel
+      run: python setup.py sdist bdist_wheel
 
+    - name: Use manylinux1 for Linux wheels
+      if: runner.os == 'Linux'
+      run: |
+        docker pull quay.io/pypa/manylinux1_x86_64
+        docker run --rm -v `pwd`:/io quay.io/pypa/manylinux1_x86_64 /bin/bash -c "cd /io && /opt/python/cp39-cp39/bin/pip wheel . -w wheelhouse/"
+        docker run --rm -v `pwd`:/io quay.io/pypa/manylinux1_x86_64 /bin/bash -c "cd /io && /opt/python/cp39-cp39/bin/pip install auditwheel && auditwheel repair wheelhouse/* -w /io/dist/"
+
+    # For macOS and Windows, we can directly use the built wheel.
+    # If any platform-specific adjustments are needed, they can be added here as conditional steps.
 
     - name: Publish to PyPI
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
       run: twine upload dist/*
-
