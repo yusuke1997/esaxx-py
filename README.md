@@ -131,7 +131,7 @@ echo abracadabra | ./a.out
 ```
 
 ### UPDATE in 0.2.0
-Introduced a new function: get_maximal_substrings(str).
+Introduced a new function: `get_maximal_substrings(str)`.
 
 This function allows for easier extraction of maximal substrings from a given string.
 
