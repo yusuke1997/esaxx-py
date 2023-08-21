@@ -132,10 +132,11 @@ echo abracadabra | ./a.out
 
 ### UPDATE in 0.2.0
 Introduced a new function: get_maximal_substrings(str).
+
 This function allows for easier extraction of maximal substrings from a given string.
 
 Usage Example:
-```
+```python
 from esa import get_maximal_substrings
 
 T = 'abracadabra'
@@ -145,7 +146,11 @@ print("count\tlength\tstring")
 for substring in substrings:
     print(f'{substring.count}\t{substring.length}\t{substring.string})
 ```
-
+```bash
+count   length  string
+2       4       abra
+5       1       a
+```
 
 ## Additional Information
 
