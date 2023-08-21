@@ -71,3 +71,11 @@ node:5
 となるはず。
 
 あとはゴリゴリ修正すればいいや。
+
+# 参考にしたもの
+- https://qiita.com/SenK/items/513712e77086e8e2e05b
+- http://blog.livedoor.jp/sonots/archives/50057871.html
+- https://kazuki-nagasawa.hatenablog.com/entry/memo_20180530_cython_py_and_cpp
+- https://qiita.com/ikuyamada/items/6b69c0e9b2f8bf337eeb
+- https://qiita.com/R-Imai/items/20c1a0a74824b6158fd4
+- https://buildersbox.corp-sansan.com/entry/2019/07/11/110000

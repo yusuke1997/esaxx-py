@@ -1,14 +1,16 @@
 # esaxx-py
 
-Enhanced Suffix Array (ESA) の Python 実装。
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 ![Python versions](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue)
+
+Enhanced Suffix Array (ESA) の Python 実装。
+
+C++で実装されているオリジナルコード（https://github.com/hillbig/esaxx）をpythonから呼び出せるようにしたもの。
 
 
 ## インストール
 
-```
+```bash
 pip install esaxx-py
 ```
 
@@ -50,7 +52,7 @@ node:5
 4	11	0
 ```
 
-あるいは`numSubstring.py`を用いて
+あるいはnumSubstring.py`を用いて
 ```bash
 ehco abracadabra | python numSubstring.py
 ```
@@ -61,8 +63,36 @@ g++ enumSubstring.cpp
 echo abracadabra | ./a.out
 ```
 
-## ライセンス
-
-このプロジェクトは MIT ライセンスのもとでライセンスされています。詳細については `LICENSE` ファイルを参照してください。
 
 
+### 注意点
+
+オリジナル実装では、esaxxの戻り値はエラーコードで、node_numではない。
+だけど、pythonの都合で、参照渡しの方法が分からなかったので、便宜上、node_numを返すようにしている。
+
+
+
+## その他
+
+オリジナル実装
+
+- https://github.com/hillbig/esaxx
+- https://code.google.com/archive/p/esaxx/
+
+Rustでの実装
+
+- https://github.com/Narsil/esaxx-rs/
+
+esaxx自体が実際に使用されているソフトウェア
+
+- https://github.com/huggingface/tokenizers
+- https://github.com/google/sentencepiece
+- https://github.com/shuyo/ldig
+
+esaxxを使用している論文リスト
+
+- aaa
+
+esaxxの解説記事
+
+- Aaa
