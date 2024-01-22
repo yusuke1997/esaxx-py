@@ -65,8 +65,8 @@ def get_maximal_substrings(str T):
             r += 1
         rank[i] = r
 
-    # print(SA, L, R, D)
-    # print(len(SA), len(L), len(R), len(D))
+    print(SA, L, R, D)
+    print(len(SA), len(L), len(R), len(D))
     # store maximal substring
     substrings = []
     for i in range(node_num):
@@ -92,30 +92,18 @@ cdef extern from "esa_wrapper.hxx":
         vector[int] length
         vector[string] substring
     Result getSubstring(string T)
-
-def get_maximal_substrings_char(str original_T):
-
-    # このままだと、byte文字列を受け渡すことになるので、
-    # 折衷案としてID列に変換してから、スペース区切りのstring型に変換してから受け渡すことにする
-    word2id = {}
-    id2word = {}
-    # あえて空白は空白のまま保持しているので、もし可視化したかったら適当にアンダーバーに置き換える
-    T = []
-    for c in original_T:
-        if c not in word2id:
-            word2id[c] = len(word2id)
-        T.append(str(word2id[c]))
-    T = ' '.join(T)
-    id2word = {item: key for key, item in word2id.items()}
-    #print(word2id)
-    #print(id2word)
-
+    
+def get_maximal_substrings_char(str T):
+    encoded_string = T.encode('utf-8')
     cdef:
-        string s = T.encode('utf-8')
-
+        char* c_string = encoded_string
+        string s = string(c_string)
+    print(T)
+    print(encoded_string)
+    print(s)
     res = getSubstring(s)
 
-    # print(s)
+    print(s)
     # ここで Result 構造体の内容を Python のデータ構造に変換する
     # 例:
     count = res.count
@@ -124,11 +112,6 @@ def get_maximal_substrings_char(str original_T):
 
     result = []
     for i in range(len(count)):
-        id_array = substrings[i].decode('utf-8').strip().split(' ')
-        if id_array == ['']:
-            continue
-        #print(id_array)
-        convert_string = ''.join([id2word[int(item)] for item in id_array])
-        result.append(MaximalSubstring(count[i], length[i], convert_string))
+        result.append(MaximalSubstring(count[i], length[i], substrings[i]))
 
     return result

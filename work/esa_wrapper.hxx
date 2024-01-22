@@ -4,6 +4,8 @@
 #include <vector>
 #include <map>
 #include <sstream>
+#include <unicode/unistr.h>
+#include <unicode/ustream.h>
 
 using namespace std;
 
@@ -22,6 +24,13 @@ int esaxx_wrapper(const std::string T,
 
 
 // ここから、MaxStringを取得する方法
+std::string convertToUtf8(const std::string& input) {
+    icu::UnicodeString unicodeStr(input.c_str(), "UTF-8");
+    std::string utf8;
+    unicodeStr.toUTF8String(utf8);
+    return utf8;
+}
+
 struct Result {
   vector<int> count;
   vector<int> length;
@@ -50,34 +59,26 @@ string convertSubstring(const vector<int>& T, int beg, int len, const vector<str
       ss << (isspace((char)c) ? '_' : (char)c);
     }
   }
-  // cerr << "substring:" << ss.str() << endl;
+  cerr << "substring:" << ss.str() << endl;
   return ss.str();
 }
 
 
-Result getSubstring(const std::string& sent){
+Result getSubstring(const std::string& original_sent){
 
   Result res;
+
+  string sent = convertToUtf8(original_sent);
     
   vector<int> T;
   map<string, int> word2id;
   size_t origLen = 0;
-  string word;
-  //ここでword_to_idをしている。
   for (char c : sent) {
-    if (!isspace(c)){
-      word += c;
-    } else if (word.size() > 0){
-      T.push_back(getID(word, word2id));
-      word = "";
-    }
+    std::string s(1, c);
+    T.push_back(getID(s, word2id));
     ++origLen;
   }
-  if (word.size() > 0){
-    T.push_back(getID(word, word2id));
-  }
 
-  
   vector<string> id2word(word2id.size());
   for (map<string, int>::const_iterator it = word2id.begin();
        it != word2id.end(); ++it){
@@ -90,9 +91,9 @@ Result getSubstring(const std::string& sent){
   vector<int> D (T.size());
 
   int k = (int)id2word.size();
-  //cerr << "origN:" << origLen << endl;
-  //cerr << "    n:" << T.size() << endl;
-  //cerr << "alpha:" << k        << endl;
+  cerr << "origN:" << origLen << endl;
+  cerr << "    n:" << T.size() << endl;
+  cerr << "alpha:" << k        << endl;
 
   int nodeNum = 0;
   if (esaxx(T.begin(), SA.begin(), 
@@ -101,7 +102,7 @@ Result getSubstring(const std::string& sent){
     return res;
   }
 
-  //cerr << " node:" << nodeNum << endl;
+  cerr << " node:" << nodeNum << endl;
 
   // エラーチェック
   if (nodeNum <= 0) {
