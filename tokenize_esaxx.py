@@ -1,11 +1,11 @@
 from datasets import load_dataset
-from esa import get_maximal_substrings_char
+from esa import get_maximal_substrings_unicode
 
 
 def main():
-    #T = 'abracadabra|||Today is Beautiful day an an an a'
-    T = 'シコタン コタンペッ シペッ'
-    substrings = get_maximal_substrings_char(T)
+    T = '松島やああ松島や松島や'
+    print(T)
+    substrings = get_maximal_substrings_unicode(T)
     print("count\tlength\tstring")
     for substring in substrings:
         print(f'{substring.count}\t{substring.length}\t{substring.string}')

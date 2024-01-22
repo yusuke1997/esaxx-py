@@ -93,7 +93,7 @@ cdef extern from "esa_wrapper.hxx":
         vector[string] substring
     Result getSubstring(string T)
 
-def get_maximal_substrings_char(str original_T):
+def get_maximal_substrings_unicode(str original_T):
 
     # このままだと、byte文字列を受け渡すことになるので、
     # 折衷案としてID列に変換してから、スペース区切りのstring型に変換してから受け渡すことにする

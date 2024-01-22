@@ -131,7 +131,7 @@ echo abracadabra | ./a.out
 ```
 
 ### UPDATE in 0.2.0
-Introduced a new function: `get_maximal_substrings(str)`.
+Introduce a new function: `get_maximal_substrings(str)`.
 
 This function allows for easier extraction of maximal substrings from a given string.
 
@@ -151,6 +151,30 @@ count   length  string
 2       4       abra
 5       1       a
 ```
+
+### UPDATE in 2.7.0
+Available unicode character
+
+Usage Example:
+```python
+from esa import get_maximal_substrings_unicode
+
+T = '松島やああ松島や松島や'
+substrings = get_maximal_substrings_unicode(T)
+print(T)
+print("count\tlength\tstring")
+for substring in substrings:
+    print(f'{substring.count}\t{substring.length}\t{substring.string})
+```
+```bash
+松島やああ松島や松島や
+count	length	string
+3	3	松島や
+3	2	島や
+3	1	や
+2	1	あ
+```
+
 
 ## Additional Information
 
